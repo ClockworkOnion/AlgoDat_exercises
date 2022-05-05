@@ -1,54 +1,31 @@
-import java.util.Arrays;
+mport java.util.Arrays;
 import java.lang.*;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class main {
-    // Anmerkung: Aufgaben 1 a, b und d sind in der Datei SortTools.java
     public static void main(String[] args) {
 
         measureTimesInsertion();
-        // Aufgabe 1 c)
         System.out.println("Merge Sort : ");
         mesureMergeSort();
         System.out.println("Merge Sort New : ");
         mesureMergeSortNew();
 
 
-        /* Ergebnisse:
 
-        BubbleSort:
-        Average time of 10 measurements for length 10: 6199
-        Average time of 10 measurements for length 100: 269125
-        Average time of 10 measurements for length 1000: 1517391
-        Average time of 10 measurements for length 10000: 58742045
-        Average time of 10 measurements for length 100000: 10906088929
-
-        InsertionSort:
-        Average time of 10 measurements for length 10: 3529
-        Average time of 10 measurements for length 100: 92895
-        Average time of 10 measurements for length 1000: 862471
-        Average time of 10 measurements for length 10000: 6790033
-        Average time of 10 measurements for length 100000: 675099191
-
-        BubbleSortNew:
-        Average time of 10 measurements for length 10: 138220
-        Average time of 10 measurements for length 100: 1415324
-        Average time of 10 measurements for length 1000: 6660400
-        Average time of 10 measurements for length 10000: 587482820
-        Average time of 10 measurements for length 100000: 58578083416
-
-         */
     }
 
     public static void measureTimesInsertion() {
         SortTools sort = new SortTools();
-        System.out.println("InsertionSort:");
+        System.out.println("InsertionSort : ");
         measureGenericSortInsertion(sort::insertionSort);
     }
 
 
     public static void measureGenericSortInsertion(Consumer<int[]> sorter) {
-        System.out.println("Aufsteigend");
+        System.out.println();
+        System.out.println("Aufsteigend : ");
         int[] lengths = {10, 100, 1000, 10000, 100000,200000};
         Arrays.stream(lengths).forEach(x -> {
             int times = 10;
@@ -63,6 +40,7 @@ public class main {
             duration = duration / times;
             System.out.println("Average time of " + times + " measurements for length " + x + ": " + duration);
         });
+        System.out.println();
         System.out.println("Absteigend : ");
         Arrays.stream(lengths).forEach(x -> {
             int times = 10;
@@ -80,6 +58,7 @@ public class main {
     }
 
     public static void mesureMergeSort(){
+        System.out.println();
         System.out.println("Aufsteigend : ");
         int[] lengths = {10, 100, 1000, 10000, 100000,200000};
         Arrays.stream(lengths).forEach(x -> {
@@ -95,6 +74,7 @@ public class main {
             duration = duration / times;
             System.out.println("Average time of " + times + " measurements for length " + x + ": " + duration);
         });
+        System.out.println();
         System.out.println("Absteigend : ");
         Arrays.stream(lengths).forEach(x -> {
             int times = 10;
