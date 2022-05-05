@@ -5,88 +5,6 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 public class SortTools {
-    // Aufgabe 1 a)
-    public void bubbleSort(int[] a) {
-        for (int i = a.length; i > 1; i--) {
-            for (int j = 0; j < i-1; j++) {
-                if (a[j] > a[j+1]) {
-                    int temp = a[j];
-                    a[j] = a[j+1];
-                    a[j+1] = temp;
-                }
-            }
-        }
-    }
-
-    // Aufgabe 1 b)
-    public void bubbleSortNew(int[] a) {
-        for (int i = a.length; i > 1; i--) {
-            for (int j = 0; j < i-1; j++) {
-                    insertionSortPart(a, j, j+10);
-                }
-            }
-        }
-
-    public void insertionSortPart(int[] a, int startIndex, int endIndex){
-        int s,j;
-        for (int i = startIndex; i <Math.min(a.length, endIndex-1) ; i++) {
-            s=a[i];
-            j=i-1;
-            while (j > startIndex-1 && a[j] > s){
-                a[j+1]=a[j];
-                j--;
-            }
-            a[j+1]=s;
-        }
-    }
-
-    // Aufgabe 1 d)
-    public static<T extends Comparable<T>> void bubbleSortGen(T[] a) {
-        for (int i = a.length; i >1 ; i--) {
-            for (int j = 0; j < i-1 ; j++) {
-               if (a[j].compareTo(a[j+1])>0) swapGen(a,j,j+1);
-            }
-        }
-    }
-
-    public static <T>void swapGen(T[] a, int j, int i) {
-        T tmp;
-        tmp=a[j];
-        a[j]=a[j+1];
-        a[j+1]=tmp;
-    }
-
-//        *********************************************
-//        Hilfsmethoden, Überbleibsel von Blatt 1 etc.
-//        *********************************************
-
-    // Aufgabe 1 b) Alternativlösung mit Arrays kopieren
-    public void bubbleSortNew2(int[] a) {
-        for (int i = a.length; i > 0; i--) {
-            for (int j = 0; j <= i-10; j++) {
-                int endIndex = Math.min(a.length, j+10);
-                int[] part = Arrays.copyOfRange(a, j, endIndex);
-                insertionSort(part);
-                for (int k = 0; k < part.length; k++) {
-                    a[j+k] = part[k];
-                }
-            }
-        }
-    }
-
-    public <T extends Comparable<T>> void insertionSortGen(T[] a) {
-        T s;
-        int j;
-        for (int i = 1; i <a.length ; i++) {
-            s=a[i];
-            j=i-1;
-            while (j>-1 && a[j].compareTo(s)>0){
-                a[j+1]=a[j];
-                j--;
-            }
-            a[j+1]=s;
-        }
-    }
 
     public static int[] createSequenceInc(int n){
         int[] arr=new int[n];
@@ -143,13 +61,6 @@ public class SortTools {
 
     }
 
-    
-
-
-
-
-
-
 
 
     public static void mergeSortNew(int[] a,int p,int r){
@@ -197,8 +108,8 @@ public class SortTools {
 
     }
 
-    public  static <T extends Comparable<T>> void mergeGeneric(T[] a,int p,int r,T sentinel){
-        int q;
+    public  static <T extends Comparable<T>> void mergeGeneric(T[] a,int p,int r,T sentinel){ //für Strings könnte man als Sentinel : ein Array der 214748364 length hat, und gefÜllt mit "z".Für Andere Typen ist
+        int q;                                                                                //die Max Valur davon
         if (p<r){
             q=(p+r)/2;
             mergeGeneric(a,p,q,sentinel);
@@ -265,10 +176,10 @@ public class SortTools {
         int t2,q;
         if (p==r) return 0;
         else{
-             q=(p+r)/2;
-             t1=maxirec(a,p,q);
-             t2=maxirec(a,q+1,r);
-             return Maxwin(a,p,r,t1,t2);
+            q=(p+r)/2;
+            t1=maxirec(a,p,q);
+            t2=maxirec(a,q+1,r);
+            return Maxwin(a,p,r,t1,t2);
         }
     }
 
@@ -285,23 +196,5 @@ public class SortTools {
         int max = Arrays.stream(R).max().getAsInt();
         return Math.max(t1,Math.max(t2,max-min));
     }
-
-
-    public static void main(String[] args) {
-//        int[] a=createSequenceRand(11);
-//        int[] newArray= Arrays.copyOf(a,a.length);
-//        System.out.println(Arrays.toString(a));
-//        mergeniw(a,0,a.length-1);
-//        System.out.println(Arrays.toString(a));
-//        int[] a={44, 30, 24, 32, 35, 30, 40, 38, 15};
-//        System.out.println(maxirec(a,0,8));
-        Integer[] a={1,5,4,6,98,2,4};
-        System.out.println(Arrays.toString(a));
-        mergeGeneric(a,0,a.length-1,Integer.MAX_VALUE);
-        System.out.println(Arrays.toString(a));
-
-
-    }
-
 
 }
