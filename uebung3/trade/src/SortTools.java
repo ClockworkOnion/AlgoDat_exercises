@@ -6,50 +6,10 @@ import java.util.stream.IntStream;
 
 public class SortTools {
 
-    public static int[] createSequenceInc(int n){
-        int[] arr=new int[n];
-        for (int i=1;i<n;i++) arr[i]=i;
-        return arr;
-    }
 
-    public static int[] createSequenceDec(int n){
-        int[] arr=new int[n];
-        for (int i=n;i>=1;i--) arr[i-1]=n-i+1;
-        return arr;
-    }
+    //Blatt 03
 
-    public static int[] createSequenceRand(int n){
-        int[] arr=new int[n];
-        for (int i = 0; i <n ; i++) {
-            arr[i]=1+new Random().nextInt(n);
-        }
-        return arr;
-    }
-
-    public static int[] createSequenceAlt(int n){
-        int[] arr= new int[n];
-        for (int i = 0; i < n; i++) {
-            if (i%2==0) arr[i]=1;
-            else arr[i]=2;
-        }
-        return arr;
-    }
-
-    public void insertionSort(int[] a){
-        int s,j;
-        for (int i = 1; i <a.length ; i++) {
-            s=a[i];
-            j=i-1;
-            while (j>-1 && a[j]>s){
-                a[j+1]=a[j];
-                j--;
-            }
-            a[j+1]=s;
-        }
-    }
-
-
-    //blatt03
+    // Aufgabe 1 a)
     public static void mergeSort(int[] a, int p, int r){
         int q;
         if (p<r){
@@ -61,8 +21,7 @@ public class SortTools {
 
     }
 
-
-
+    // Aufgabe 1 b)
     public static void mergeSortNew(int[] a,int p,int r){
         int q,w;
 
@@ -108,6 +67,7 @@ public class SortTools {
 
     }
 
+    // Aufgabe 1 d)
     public  static <T extends Comparable<T>> void mergeGeneric(T[] a,int p,int r,T sentinel){ //für Strings könnte man als Sentinel : ein Array der 214748364 length hat, und gefÜllt mit "z".Für Andere Typen ist
         int q;                                                                                //die Max Valur davon
         if (p<r){
@@ -158,7 +118,66 @@ public class SortTools {
                 j++;
             }
         }
+    }
 
+
+    // Alte Methoden / Hilfsmethoden / Ungenutzte
+
+    // MaxWin Testen
+    private static int Maxwin(int[] a, int p, int r, int t1, int t2) {
+        int q=(p+r)/2;
+        int n1,n2;
+        n1=q-p+1; n2=r-q;
+        int[] L=new int[n1+1]; int R[]=new int[n2+1];
+        for (int i=0;i<n1;i++) L[i]=a[p+i];
+        for (int j = 0; j <n2 ; j++) R[j]=a[q+j+1];
+        L[n1]= Integer.MAX_VALUE;
+        R[n2]=Integer.MIN_VALUE;
+        int min = Arrays.stream(L).min().getAsInt();
+        int max = Arrays.stream(R).max().getAsInt();
+        return Math.max(t1,Math.max(t2,max-min));
+    }
+
+    public static int[] createSequenceInc(int n){
+        int[] arr=new int[n];
+        for (int i=1;i<n;i++) arr[i]=i;
+        return arr;
+    }
+
+    public static int[] createSequenceDec(int n){
+        int[] arr=new int[n];
+        for (int i=n;i>=1;i--) arr[i-1]=n-i+1;
+        return arr;
+    }
+
+    public static int[] createSequenceRand(int n){
+        int[] arr=new int[n];
+        for (int i = 0; i <n ; i++) {
+            arr[i]=1+new Random().nextInt(n);
+        }
+        return arr;
+    }
+
+    public static int[] createSequenceAlt(int n){
+        int[] arr= new int[n];
+        for (int i = 0; i < n; i++) {
+            if (i%2==0) arr[i]=1;
+            else arr[i]=2;
+        }
+        return arr;
+    }
+
+    public void insertionSort(int[] a){
+        int s,j;
+        for (int i = 1; i <a.length ; i++) {
+            s=a[i];
+            j=i-1;
+            while (j>-1 && a[j]>s){
+                a[j+1]=a[j];
+                j--;
+            }
+            a[j+1]=s;
+        }
     }
 
     public static int maxi(int[] a){
@@ -182,19 +201,4 @@ public class SortTools {
             return Maxwin(a,p,r,t1,t2);
         }
     }
-
-    private static int Maxwin(int[] a, int p, int r, int t1, int t2) {
-        int q=(p+r)/2;
-        int n1,n2;
-        n1=q-p+1; n2=r-q;
-        int[] L=new int[n1+1]; int R[]=new int[n2+1];
-        for (int i=0;i<n1;i++) L[i]=a[p+i];
-        for (int j = 0; j <n2 ; j++) R[j]=a[q+j+1];
-        L[n1]= Integer.MAX_VALUE;
-        R[n2]=Integer.MIN_VALUE;
-        int min = Arrays.stream(L).min().getAsInt();
-        int max = Arrays.stream(R).max().getAsInt();
-        return Math.max(t1,Math.max(t2,max-min));
-    }
-
 }
