@@ -27,6 +27,7 @@ public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQue
         }
         K min = (K) arr.get(0);
         arr.set(0,arr.get(arr.size()-1));
+        arr.remove(arr.size()-1);
         MinHeapify(0);
         return min;
     }
@@ -70,9 +71,10 @@ public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQue
 
     public  void MinHeapify(int i){
         int left=Left(i);
-        int right=Right(i); int min;
+        int right=Right(i); int min=-5;
         if (left<=arr.size()-1 && arr.get(left).compareTo(arr.get(i))<0){
             min=left;
+
         }else {
             min=i;
         }
@@ -87,19 +89,23 @@ public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQue
         }
     }
 
-    public static void main(String[] args) {
+
+
+    public static void main(String[] args) throws CustomException {
         PriorityQeueMinHeap<Integer> prq=new PriorityQeueMinHeap<>();
 
-        Random rdm=new Random() ;
+        Random rdm=new Random();
         for (int i = 1; i < 10; i++) {
             Integer x=rdm.nextInt(1,50);
             prq.arr.add(x);
 
         }
         System.out.println("before");
-        prq.arr.forEach(x-> System.out.println(x));
-        prq.MinHeapify(0);
+
+        prq.BuildMinHeap();  prq.arr.forEach(x-> System.out.println(x));
+        prq.ExtractMin();
         System.out.println("after");
         prq.arr.forEach(x-> System.out.println(x));
+
     }
 }
