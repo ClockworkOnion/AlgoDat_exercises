@@ -4,14 +4,14 @@ import java.util.function.Consumer;
 
 public class main {
     public static void main(String[] args) {
-        measureLinearSearchConstantValue(-5);
-        measureLinearSearchRandomValues();
+       measureBinarySearchForConstant(-2);
+       measureBinarySearchRandomValue();
 
-        measureBinarySearchForConstant(-2);
-        measureBinarySearchRandomValue();
+       measureBinarySearchNewConstantValue(-4);
+       measureBinarySearchNewRandomValues();
 
-        measureBinarySearchNewConstantValue(-4);
-        measureBinarySearchNewRandomValues();
+       measureLinearSearchConstantValue(-5);
+       measureLinearSearchRandomValues();
     }
     public static void measureLinearSearchConstantValue(int Searched) {
         System.out.println(" Linear Search Measurements With Constant Value: ");

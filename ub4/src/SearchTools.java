@@ -17,7 +17,7 @@ public class SearchTools {
 
     public static int binSearch(int[] A, int x, int l, int r){
         int q;
-        if (l>r) return -1;
+        if (l==r) return -1;
         else {
             q=(l+r)/2;
             if (A[q]==x) return q;
@@ -40,5 +40,11 @@ public class SearchTools {
         }
     }
 
+
+    public static void main(String[] args) {
+        int[] a={5,2,3,4,5,6,7,8,9,10};
+        System.out.println(binSearch(a,5,0,1));
+
+    }
 
 }
