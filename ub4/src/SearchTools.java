@@ -42,8 +42,8 @@ public class SearchTools {
 
 
     public static void main(String[] args) {
-        int[] a={5,2,3,4,5,6,7,8,9,10};
-        System.out.println(binSearch(a,5,0,1));
+        int[] a=createSequenceInc(685154321);
+        System.out.println(binSearchNew(a,5,0,a.length-1));
 
     }
 
