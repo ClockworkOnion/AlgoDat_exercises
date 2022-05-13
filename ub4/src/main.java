@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 
 public class main {
@@ -41,7 +42,7 @@ public class main {
             long duration = 0;
             for (int i = 0; i < times; i++) {
                 int[] toSearchIn = SearchTools.createSequenceInc(x);
-                Searched=toSearchIn[random.nextInt(0,toSearchIn.length-1)];
+                Searched=toSearchIn[ThreadLocalRandom.current().nextInt(0, toSearchIn.length-1)];
                 System.gc();
                 long before = System.nanoTime();
                 SearchTools.linSearch(toSearchIn,Searched);
@@ -54,7 +55,8 @@ public class main {
 
     public static void measureBinarySearchRandomValue() {
         System.out.println(" Binary Search Measurements for Random values : ");
-        int[] lengths = { 100000, 200000,1000000,100000000,685154321};
+//        int[] lengths = { 100000, 200000,1000000,100000000,685154320};
+        int[] lengths = { 100000000,685154320};
         Random random=new Random();
         Arrays.stream(lengths).forEach(x -> {
             int Searched;
@@ -62,7 +64,7 @@ public class main {
             long duration = 0;
             for (int i = 0; i < times; i++) {
                 int[] toSearchIn = SearchTools.createSequenceInc(x);
-                Searched=toSearchIn[random.nextInt(0,toSearchIn.length-1)];
+                Searched=toSearchIn[ThreadLocalRandom.current().nextInt(0, toSearchIn.length-1)];
                 System.gc();
                 long before = System.nanoTime();
                 SearchTools.binSearch(toSearchIn,Searched,0,toSearchIn.length-1);
@@ -120,7 +122,7 @@ public class main {
             long duration = 0;
             for (int i = 0; i < times; i++) {
                 int[] toSearchIn = SearchTools.createSequenceInc(x);
-                Searched=toSearchIn[random.nextInt(0,toSearchIn.length-1)];
+                Searched=toSearchIn[ThreadLocalRandom.current().nextInt(0, toSearchIn.length-1)];
                 System.gc();
                 long before = System.nanoTime();
                 SearchTools.binSearchNew(toSearchIn,Searched,0,toSearchIn.length-1);
