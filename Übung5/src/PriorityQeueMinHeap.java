@@ -8,22 +8,25 @@ public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQue
 
     @Override
     public void addElement(K elem,K sentinel) throws CustomException {
+        BuildMinHeap();
         Insert(elem,sentinel);
     }
 
     @Override
     public K getFirst() {
-       return arr.get(0);
+        BuildMinHeap();
+        return arr.get(0);
     }
 
     @Override
     public void deleteFirst() throws CustomException {
+        BuildMinHeap();
         ExtractMin();
     }
 
     public  K ExtractMin() throws CustomException{
         if (arr.size()==0){
-           throw new CustomException("Extract min Exception");
+            throw new CustomException("Extract min Exception");
         }
         K min = (K) arr.get(0);
         arr.set(0,arr.get(arr.size()-1));
@@ -33,8 +36,9 @@ public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQue
     }
 
     public   void Insert(K key,K sentinel) throws CustomException {
+        //arr.ensureCapacity(1);
         arr.add(sentinel);
-        DicreaseKey(arr.size(),key);
+        DicreaseKey(arr.size()-1,key);
     }
 
     public void DicreaseKey(int i,K key) throws CustomException{
@@ -88,22 +92,32 @@ public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQue
             MinHeapify(min);
         }
     }
+//
+//    public void Infos(K elem,K sentinel) throws CustomException {
+//        System.out.println("getting first element : "+getFirst());
+//        System.out.println("deleting first element : "+getFirst());
+//        deleteFirst();
+//        System.out.println("adding new element: ");
+//        addElement(elem,sentinel);
+//
+//    }
 
 
 
     public static void main(String[] args) throws CustomException {
         PriorityQeueMinHeap<Integer> prq=new PriorityQeueMinHeap<>();
 
-        Random rdm=new Random();
-        for (int i = 1; i < 10; i++) {
-            Integer x=rdm.nextInt(1,50);
-            prq.arr.add(x);
-
-        }
+//        Random rdm=new Random();
+//        for (int i = 1; i < 10; i++) {
+//            Integer x=rdm.nextInt(1,50);
+//            prq.arr.add(x);
+//
+//        }
+        prq.arr.add(1);  prq.arr.add(25);  prq.arr.add(100); prq.arr.add(36); prq.arr.add(7); prq.arr.add(19); prq.arr.add(17); prq.arr.add(3); prq.arr.add(2);
         System.out.println("before");
 
         prq.BuildMinHeap();  prq.arr.forEach(x-> System.out.println(x));
-        prq.ExtractMin();
+        prq.addElement(0,Integer.MAX_VALUE); //max value to ensure for dicreasekey thats gonna be always the biggest elem
         System.out.println("after");
         prq.arr.forEach(x-> System.out.println(x));
 
