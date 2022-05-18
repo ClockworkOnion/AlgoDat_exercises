@@ -17,12 +17,12 @@ public class SearchTools {
 
     public static int binSearch(int[] A, int x, int l, int r){
         int q;
-        if (l==r) return -1;
+        if (l>r || A.length==0) return -1;
         else {
-            q=(l+r)/2;
+            q=l+(r-l)/2;
             if (A[q]==x) return q;
             else if (x>A[q]) return binSearch(A,x,q+1,r);
-            else return binSearch(A,x,l,q);
+            else return binSearch(A,x,l,q-1);
         }
     }
 
@@ -42,8 +42,9 @@ public class SearchTools {
 
 
     public static void main(String[] args) {
-        int[] a=createSequenceInc(685154321);
-        System.out.println(binSearchNew(a,5,0,a.length-1));
+        //int[] a=createSequenceInc(685154321);
+        int[] b={1,2,3,4,5,6,8};
+        System.out.println(binSearchNew(b,8,0,b.length-1));
 
     }
 

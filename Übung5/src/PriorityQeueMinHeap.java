@@ -102,24 +102,32 @@ public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQue
 //
 //    }
 
+    public int Find(int i,K elem){
+       if (arr.get(i).compareTo(elem) < 0) return -1;
+       else if (arr.get(i).equals(elem)) return 1;
+       else{
+           if (arr.get(Right(i)).compareTo(elem)>0) return Find(Right(i),elem);
+           else return Find(Left(i),elem);
+       }
+    }
 
 
     public static void main(String[] args) throws CustomException {
         PriorityQeueMinHeap<Integer> prq=new PriorityQeueMinHeap<>();
 
-//        Random rdm=new Random();
-//        for (int i = 1; i < 10; i++) {
-//            Integer x=rdm.nextInt(1,50);
-//            prq.arr.add(x);
-//
-//        }
-        prq.arr.add(1);  prq.arr.add(25);  prq.arr.add(100); prq.arr.add(36); prq.arr.add(7); prq.arr.add(19); prq.arr.add(17); prq.arr.add(3); prq.arr.add(2);
-        System.out.println("before");
+        Random rdm=new Random();
+        for (int i = 1; i < 10; i++) {
+            Integer x=rdm.nextInt(1,50);
+            prq.arr.add(x);
 
-        prq.BuildMinHeap();  prq.arr.forEach(x-> System.out.println(x));
-        prq.addElement(0,Integer.MAX_VALUE); //max value to ensure for dicreasekey thats gonna be always the biggest elem
-        System.out.println("after");
-        prq.arr.forEach(x-> System.out.println(x));
+        } prq.BuildMinHeap(); prq.arr.forEach(x-> System.out.println(x));
+//        prq.arr.add(1);  prq.arr.add(25);  prq.arr.add(100); prq.arr.add(36); prq.arr.add(7); prq.arr.add(19); prq.arr.add(17); prq.arr.add(3); prq.arr.add(2);
+//        System.out.println("before");
+//
+//        prq.BuildMinHeap();  prq.arr.forEach(x-> System.out.println(x));
+//        prq.addElement(0,Integer.MAX_VALUE); //max value to ensure for dicreasekey thats gonna be always the biggest elem
+//        System.out.println("after");
+//        prq.arr.forEach(x-> System.out.println(x));
 
     }
 }
