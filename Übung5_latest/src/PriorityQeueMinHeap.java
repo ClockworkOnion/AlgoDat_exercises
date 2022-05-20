@@ -4,23 +4,26 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQueuee<K> {
-    private ArrayList<K> arr=new ArrayList<>();
+    private ArrayList<K> arr;
     private int Heapsize;
     private int Size;
 
 
-    public PriorityQeueMinHeap(int heapsize) {
-        Heapsize = heapsize;
+    public PriorityQeueMinHeap(int size,int heapsize) throws CustomException {
+        this.Size=size;
+        if (heapsize<=size) this.Heapsize=heapsize;
+        else throw new CustomException("Heapsize is bigger than max Size");
+        this.arr=new ArrayList<>(Size);
     }
 
     @Override
     public void addElement(K elem, K sentinel) throws CustomException {
-        BuildMinHeap(); //Angenommen das Array kein Minheap ist
+        BuildMinHeap();
         Insert(elem,sentinel);
     }
 
     @Override
-    public K getFirst() {
+    public K getFirst() throws CustomException {
         BuildMinHeap(); //Angenommen das Array kein Minheap ist
         return arr.get(0);
     }
@@ -64,8 +67,10 @@ public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQue
 
 
 
-    public <T> void BuildMinHeap(){
-        for (int i = (Heapsize-1)/2; i>=0;i--) MinHeapify(i);
+    public <T> void BuildMinHeap() throws CustomException {
+        if (Size != 0)
+            for (int i = (Heapsize-1)/2; i>=0;i--) MinHeapify(i);
+        else throw new CustomException("Arraylist is empty");
     }
 
     public int Left(int i){
@@ -103,7 +108,7 @@ public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQue
 
 
     public static void main(String[] args) throws CustomException {
-        PriorityQeueMinHeap<Integer> prq=new PriorityQeueMinHeap<>(5);
+        PriorityQeueMinHeap<Integer> prq=new PriorityQeueMinHeap<>(5,5);
 
         Random rdm=new Random();
         for (int i = 10; i >1; i--) {
@@ -113,11 +118,13 @@ public class PriorityQeueMinHeap<K extends Comparable<K>> implements PriorityQue
         }
         System.out.println("before");
         prq.arr.forEach(x-> System.out.println(x));
-        prq.BuildMinHeap();
+//        prq.addElement(4,Integer.MAX_VALUE);
         //prq.addElement(0,Integer.MAX_VALUE);
-        prq.deleteFirst();
+        //prq.deleteFirst();
+        prq.addElement(-20,Integer.MAX_VALUE);
         System.out.println("after");
         prq.arr.forEach(x-> System.out.println(x));
+
         //System.out.println(prq.Heapsize);
 //        //System.out.println("before");
 //        prq.arr.forEach(x-> System.out.println(x));
