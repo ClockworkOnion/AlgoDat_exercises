@@ -1,5 +1,8 @@
 import com.sun.source.tree.Tree;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 public class SearchTree <T extends Comparable>{
     TreeElement root;
 
@@ -87,6 +90,21 @@ public class SearchTree <T extends Comparable>{
         if (y!=elem) elem.key=y.key;
     }
 
+    ArrayList<TreeElement> results = new ArrayList<TreeElement>();
+    public ArrayList<TreeElement> toSortedArrayList() {
+        results = new ArrayList<TreeElement>();
+        toListRecursive(this.root);
+        return results;
+    }
+
+    private void toListRecursive(TreeElement elem) {
+        if (elem != null) {
+            toListRecursive(elem.left);
+            results.add(elem);
+            toListRecursive(elem.right);
+        }
+    }
+
     public static void InorderTreeWalk(TreeElement elem){
         if (elem != null){
             InorderTreeWalk(elem.left);
@@ -105,6 +123,7 @@ public class SearchTree <T extends Comparable>{
 //        TreeElement<Integer> e3=new TreeElement<>(6,e2,null,null);
 //        TreeElement<Integer> e4=new TreeElement<>(6,e2,null,null);
 
+
         ///root
         SearchTree<Integer> tree=new SearchTree<>(new TreeElement(18,null,null,null));
         TreeInsert(tree,new TreeElement(11));
@@ -115,11 +134,16 @@ public class SearchTree <T extends Comparable>{
         TreeInsert(tree,new TreeElement(27));
         TreeInsert(tree,new TreeElement(21));
         TreeInsert(tree,new TreeElement(45));
+//        tree.TreeDelete(tree, new TreeElement(27));
+        System.out.println("Tree Printing : ");
+        InorderTreeWalk(tree.root);
 
-//        System.out.println("Tree Printing : ");
-//        InorderTreeWalk(tree.root);
+        System.out.println("As list:");
+        ArrayList<TreeElement> list = tree.toSortedArrayList();
+        list.forEach(x -> System.out.println(x.key));
 
-        System.out.println(tree.search(tree.root,33).key);
+
+//        System.out.println(tree.search(tree.root,33).key);
 
     }
 
