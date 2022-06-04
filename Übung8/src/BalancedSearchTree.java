@@ -1,0 +1,181 @@
+import com.sun.source.tree.Tree;
+
+public class BalancedSearchTree <T extends Comparable>{
+    TreeElement root;
+    final static double alpha=0.3;
+
+    public BalancedSearchTree(TreeElement root) {
+        this.root = root;
+    }
+
+
+
+    public static int calculateAll(TreeElement elem){
+        int c=0;
+        if (elem == null) return 0;
+        else c= 1+calculateHeight(elem.left)+calculateHeight(elem.right);
+        return c;
+    }
+
+    public static int calculateHeight(TreeElement elem){
+        if (calculateAll(elem)==0) return 0;
+        return calculateAll(elem)-1;
+    }
+
+
+
+    public static <T extends Comparable> TreeElement search(TreeElement root, T key){
+        if (root==null || root.key.equals(key)){
+            return root;
+        }
+        if (key.compareTo(root.key)<0){
+
+            return search(root.left,key);
+        }
+        else {
+            return search(root.right,key);
+        }
+    }
+
+    public static int calculateWay(TreeElement element,TreeElement elem){
+        if (search(element,elem.key)!=null){
+            if (element==null || element.key.equals(elem.key)){
+                return 1;
+            }
+            if (elem.key.compareTo(element.key)<0){
+
+                return 1+calculateWay(element.left,elem);
+            }
+            else {
+
+                return 1+calculateWay(element.right,elem);
+            }
+        }
+        else return -1;
+    }
+
+    //calculate gho
+    public static double calculateBalance(TreeElement elem){
+        if (elem==null) return 1/(calculateHeight(elem)+1);
+        return (calculateAll(elem.left)+1)/(calculateHeight(elem)+1);
+    }
+
+    //usual tree insert
+    public static void TreeInsert(BalancedSearchTree T,TreeElement elem){
+        TreeElement y=T.root;
+        while(y != null ){
+            elem.parent=y;
+            if (elem.key.compareTo(y.key)<0){
+                y=y.left;
+            }else y=y.right;
+        }
+        if (elem.parent==null){
+            T.root=elem;
+        }else {
+            if (elem.key.compareTo(elem.parent.key)<0){
+                elem.parent.left=elem;
+            }else {
+                elem.parent.right=elem;
+            }
+        }
+    }
+
+    //balanced inserting
+    public static void TreeInsertBalanced(BalancedSearchTree T,TreeElement elem){
+        TreeInsert(T,elem);
+        int k=calculateWay(T.root,search(T.root,elem.key));
+        elem=search(T.root,elem.key);
+        elem.level=k;
+        RebalanceTree(T,elem,elem.level);
+    }
+
+    private static void RebalanceTree(BalancedSearchTree t, TreeElement elem,int level) {
+        for (int i=level;i>0;i--){
+            if (calculateBalance(elem)<alpha){
+                if (calculateBalance(elem.right)<=(1/(2-alpha))){
+                    LeftRotate(t,elem);
+                }else {
+                    DoubleLeftRotate(t,elem);
+                }
+            }
+            if (calculateBalance(elem)>1-alpha){
+                if (calculateBalance(elem.left)>=(1-1/(2-alpha))){
+                    RightRotate(t,elem);
+                }
+                else {
+                    DoubleRightRotate(t,elem);
+                }
+            }
+        }
+    }
+
+    private static void DoubleRightRotate(BalancedSearchTree t, TreeElement elem) {
+        RightRotate(t,elem);
+        RightRotate(t,elem);
+    }
+
+    private static void RightRotate(BalancedSearchTree t, TreeElement elem) {
+        if (elem.left!=null) {
+            TreeElement y = elem.left;
+            elem.left = y.right;
+            if (y.right != null) y.right.parent = elem;
+            y.parent = elem.parent;
+            if (elem.parent == null) t.root = y;
+            else if (elem == elem.parent.right) elem.parent.right = y;
+            else elem.parent.left = y;
+            y.right = elem;
+            elem.parent = y;
+        }
+    }
+
+    private static void DoubleLeftRotate(BalancedSearchTree t, TreeElement elem) {
+        LeftRotate(t,elem);
+        LeftRotate(t,elem);
+    }
+
+    private static void LeftRotate(BalancedSearchTree t, TreeElement elem) {
+        if (elem.right!=null){
+
+            TreeElement y=elem.right;
+            elem.right=y.left;
+            if (y.left != null) y.left.parent=elem;
+            y.parent=elem.parent;
+            if (elem.parent==null) t.root=y;
+            else if (elem==elem.parent.left) elem.parent.left=y;
+            else elem.parent.right=y;
+            y.left=elem;
+            elem.parent=y;
+        }
+    }
+
+
+
+    public static void printBinaryTree(TreeElement root, int space, int height)
+    {
+        if (root == null) {
+            return;
+        }
+        space += height;
+        printBinaryTree(root.right, space, height);
+        System.out.println();
+        for (int i = height; i < space; i++) {
+            System.out.print(' ');
+        }
+        System.out.print(root.key);
+        System.out.println();
+        printBinaryTree(root.left, space, height);
+    }
+    public static void main(String[] args) {
+        BalancedSearchTree<Integer> tree=new BalancedSearchTree<>(new TreeElement<Integer>(8,null,null,null));
+        TreeInsertBalanced(tree,new TreeElement(4));
+        TreeInsertBalanced(tree,new TreeElement(10));
+        TreeInsertBalanced(tree,new TreeElement(2));
+        TreeInsertBalanced(tree,new TreeElement(6));
+        TreeInsertBalanced(tree,new TreeElement(9));
+        TreeInsertBalanced(tree,new TreeElement(11));
+        TreeInsertBalanced(tree,new TreeElement(14));
+        TreeInsertBalanced(tree,new TreeElement(15));
+
+        printBinaryTree(tree.root,10,10);
+    }
+}
