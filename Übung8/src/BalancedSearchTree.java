@@ -1,8 +1,13 @@
 import com.sun.source.tree.Tree;
 
+
+import java.util.ArrayList;
+
 public class BalancedSearchTree <T extends Comparable>{
+
     TreeElement root;
     final static double alpha=0.3;
+    public static ArrayList arrayList=new ArrayList<>();
 
     public BalancedSearchTree(TreeElement root) {
         this.root = root;
@@ -80,9 +85,14 @@ public class BalancedSearchTree <T extends Comparable>{
         }
     }
 
-    //usual tree delete ans successor and minimum
+    //usual tree delete ans successor and minimum and maximum
     public static TreeElement TreeMinimum(TreeElement root){
         while (root.left != null) root=root.left;
+        return root;
+    }
+
+    public static TreeElement TreeMaximum(TreeElement root){
+        while (root.right != null) root=root.right;
         return root;
     }
 
@@ -142,13 +152,14 @@ public class BalancedSearchTree <T extends Comparable>{
                     DoubleRightRotate(t,search(t.root, elem.key));
                 }
             }
+            elem=elem.parent;
         }
-
     }
 
     private static void DoubleRightRotate(BalancedSearchTree t, TreeElement elem) {
+        LeftRotate(t,elem.left);
         RightRotate(t,elem);
-        RightRotate(t,elem);
+
     }
 
     private static void RightRotate(BalancedSearchTree t, TreeElement elem) {
@@ -166,13 +177,13 @@ public class BalancedSearchTree <T extends Comparable>{
     }
 
     private static void DoubleLeftRotate(BalancedSearchTree t, TreeElement elem) {
+        RightRotate(t,elem.right);
         LeftRotate(t,elem);
-        LeftRotate(t,elem);
+
     }
 
     private static void LeftRotate(BalancedSearchTree t, TreeElement elem) {
         if (elem.right!=null){
-
             TreeElement y=elem.right;
             elem.right=y.left;
             if (y.left != null) y.left.parent=elem;
@@ -184,7 +195,7 @@ public class BalancedSearchTree <T extends Comparable>{
             elem.parent=y;
         }
     }
-
+    //balanced deleting
     public static void DeleteAndBalance(BalancedSearchTree t, TreeElement elem){
         if (elem == null) return;
         TreeDelete(t,elem);
@@ -194,6 +205,20 @@ public class BalancedSearchTree <T extends Comparable>{
         RebalanceTree(t,elem,k);
     }
 
+    public static <T> void toSortedArrayList(TreeElement elem){
+        if (elem != null){
+            toSortedArrayList(elem.left);
+            arrayList.add((T)elem.key);
+            toSortedArrayList(elem.right);
+        }
+
+    }
+
+    public static <T> ArrayList<T> toSortedArrayList1(TreeElement elem){
+        toSortedArrayList(elem);
+        return arrayList;
+
+    }
 
 
     public static void printBinaryTree(TreeElement root, int space, int height)
@@ -212,20 +237,28 @@ public class BalancedSearchTree <T extends Comparable>{
         printBinaryTree(root.left, space, height);
     }
     public static void main(String[] args) {
-        BalancedSearchTree<Integer> tree=new BalancedSearchTree<>(new TreeElement<Integer>(5,null,null,null));
-        TreeInsertBalanced(tree,new TreeElement(8));
-        TreeInsertBalanced(tree,new TreeElement(4));
-        TreeInsertBalanced(tree,new TreeElement(14));
-        TreeInsertBalanced(tree,new TreeElement(2));
-        TreeInsertBalanced(tree,new TreeElement(6));
+        BalancedSearchTree<Integer> tree=new BalancedSearchTree<>(new TreeElement<Integer>(2,null,null,null));
         TreeInsertBalanced(tree,new TreeElement(10));
-        TreeInsertBalanced(tree,new TreeElement(15));
-        TreeInsertBalanced(tree,new TreeElement(11));
+        TreeInsertBalanced(tree,new TreeElement(5));
+        TreeInsertBalanced(tree,new TreeElement(3));
+        TreeInsertBalanced(tree,new TreeElement(6));
         TreeInsertBalanced(tree,new TreeElement(9));
-        TreeInsertBalanced(tree,new TreeElement(17));
-        DeleteAndBalance(tree,search(tree.root, 14));
+//        TreeInsertBalanced(tree,new TreeElement(10));
+//        TreeInsertBalanced(tree,new TreeElement(15));
+//        TreeInsertBalanced(tree,new TreeElement(11));
+        //TreeInsertBalanced(tree,new TreeElement(17));
+
+        //RightRotate(tree,search(tree.root, 14));
+        //LeftRotate(tree,search(tree.root, 8));
+//        TreeInsertBalanced(tree,new TreeElement(9));
+//        TreeInsertBalanced(tree,new TreeElement(17));
+        //DeleteAndBalance(tree,search(tree.root, 14));
         //System.out.println(calculateBalance(search(tree.root, 2)));
         //DoubleLeftRotate(tree,search(tree.root, 11));
-        printBinaryTree(tree.root,5,5);
+        //printBinaryTree(tree.root,10,10);
+        toSortedArrayList1(tree.root);
+        arrayList.forEach(x-> System.out.println(x));
+        //System.out.println(calculateWay( tree.root,search(tree.root, 10)));
+        //System.out.println(tree.root.key);
     }
 }
