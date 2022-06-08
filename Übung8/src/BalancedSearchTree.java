@@ -196,7 +196,8 @@ public class BalancedSearchTree <T extends Comparable>{
         }
     }
     //balanced deleting
-    public static void DeleteAndBalance(BalancedSearchTree t, TreeElement elem){
+    public static void DeleteAndBalance(BalancedSearchTree t, T key){
+        TreeElement elem=search(t.root, key);
         if (elem == null) return;
         TreeDelete(t,elem);
         int k=calculateWay(t.root,search(t.root,elem.key));
