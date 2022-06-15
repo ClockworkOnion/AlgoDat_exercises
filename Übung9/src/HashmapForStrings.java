@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class HashmapForStrings {
     CustomLinkedList<String>[] HashingArray;
@@ -19,7 +20,7 @@ public class HashmapForStrings {
         return sum;
     }
 
-    public void insert(String string){
+    public  void insert(String string){
         if (search(string)==null){
             int code= AsciiOfString(string);
             int hashcode=code%HashingArray.length;
@@ -50,7 +51,7 @@ public class HashmapForStrings {
         else return (String) HashingArray[hashcode].ListSearch(string).elem;
     }
 
-    public void addDataFromFile(String fileName) throws IOException {
+    public  void addDataFromFile(String fileName) throws IOException {
         File file = new File(fileName);
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
@@ -70,29 +71,67 @@ public class HashmapForStrings {
         }
     }
 
-    public int countSuccededSearchs(String fileName) throws IOException{
+    public int countNotSuccededSearchs(String fileName) throws IOException{
         File file = new File(fileName);
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st; int c=0;
         while ((st = br.readLine()) != null){
             if (search(st)!=null){
-                c++;
-                System.out.println(st + " founded");
             }else {
-                System.out.println(st + " not founded");
+                c++;
             }
         }
         return c;
     }
 
+    public  void measureInserting(String Filename) {
+        System.out.println(" Inserting Measurements : ");
+        int[] lengths = { 1000, 10000};
+        Arrays.stream(lengths).forEach(x -> {
+            long duration = 0;
+            long before = System.nanoTime();
+            try {
+                addDataFromFile(Filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            duration += System.nanoTime() - before;
+            System.out.println("Average time of inserting is int array with length "+x+" is "  + duration);
+        });
+    }
+
+    public  void measureSearching(String Filename) {
+
+        System.out.println(" Inserting Measurements : ");
+        int[] lengths = { 1000, 10000};
+        Arrays.stream(lengths).forEach(x -> {
+            int p = 0;
+            long duration = 0;
+            long before = System.nanoTime();
+            try {
+                p=countNotSuccededSearchs(Filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            duration += System.nanoTime() - before;
+            System.out.println("Average time of searching is int array with length "+x+" is "  + duration +" with : "+p+" Unsuccessful searches.");
+        });
+    }
+
     public static void main(String[] args) throws IOException {
             HashmapForStrings object=new HashmapForStrings(1000);
-            object.addDataFromFile("C:\\Users\\21260\\Desktop\\Übung9\\OfficialScrabbleWordListGerman.txt");
-
+            object.measureSearching("C:\\Users\\21260\\Desktop\\Übung9\\OfficialScrabbleWordListGerman.txt");
+            //object.addDataFromFile("C:\\Users\\21260\\Desktop\\Übung9\\OfficialScrabbleWordListGerman.txt");
+//
             //int counted = object.countSuccededSearchs("C:\\Users\\21260\\Desktop\\Übung9\\AreMyFriendsCheating.txt");
-            //System.out.println(counted);
-            System.out.println(object.delete("ÜBERSTÜRZ"));
-            object.printHashArray();
+//            //System.out.println(counted);
+//            System.out.println(object.delete("ÜBERSTÜRZ"));
+//            object.printHashArray();
+
+
+        //System.out.println(test.hashtable[2].head.data);
+
+        //object.printHashArray();
 
     }
 }
