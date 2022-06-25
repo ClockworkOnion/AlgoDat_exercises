@@ -29,7 +29,7 @@ public class OpenHashmapForStrings {
     }
 
 
-    public static int  radixRepresentation(String string){
+    public static int radixRepresentation(String string){
         int sum=0;
         for (int i = string.length()-1; i >=0 ; i--) {
             sum+=((int) string.charAt(i))*Math.pow(128,string.length()-1-i);
@@ -48,7 +48,7 @@ public class OpenHashmapForStrings {
 
 
     public  int quadraticHashing(String str,int i){
-        return (int) ((hashing(str)+i*c1+Math.pow(i,2)*c2)% OpenHashMapArray.length);
+        return (int) ((hashing(str)+i*c1+Math.pow(i,2)*c2))%OpenHashMapArray.length;
     }
 
     public int doubledHashing(String str,int i) {
@@ -61,35 +61,11 @@ public class OpenHashmapForStrings {
 
 
 
-
-
-//    public  int insert(String str) throws CustomException{
-//        int i=0,j=0;
-//        while (i< OpenHashMapArray.length ){
-//            j=doubledHashing(str,i);
-//            if (Objects.equals(OpenHashMapArray[j], "Deleted") || OpenHashMapArray[j]==null){
-//                OpenHashMapArray[j]=str;
-//                return j;
-//            }
-//            else i++;
-//            //if (i==OpenHashMapArray.length && !OpenHashMapArray[j].equals(str)) i--;
-//        }
-//        throw  new CustomException("Überlauf");
-//    }
-
-//    public  int insert(String str, BiFunction<String, Integer, Integer> hash) throws CustomException{
-//        int i=0;
-//        int j=0;
-//        while (i< OpenHashMapArray.length ){
-//            j= hash.apply(str, i);
-//           // System.out.println(str+"  "+i);
-//            if (Objects.equals(OpenHashMapArray[(int) j], "Deleted") || OpenHashMapArray[(int) j]==null){
-//                OpenHashMapArray[(int) j]=str;
-
     public int insert(String str, BiFunction<String, Integer, Integer> hashFunc) throws CustomException {
         int i = 0, j;
         while (i < OpenHashMapArray.length) {
             j = hashFunc.apply(str, i);
+            System.out.println(str);
             if (OpenHashMapArray[j] == "Deleted" || OpenHashMapArray[j] == null) {
                 OpenHashMapArray[j] = str;
                 return j;
@@ -235,16 +211,18 @@ public class OpenHashmapForStrings {
     public static void main(String[] args) throws IOException, CustomException {
 
         //OpenHashmapForStrings object1=new OpenHashmapForStrings(200000);
-        OpenHashmapForStrings object2=new OpenHashmapForStrings(200000);
+        OpenHashmapForStrings object2=new OpenHashmapForStrings(500);
 //        object1.measureInserting("C:\\Users\\21260\\Desktop\\Übung10\\OfficialScrabbleWordListGerman.txt",object1::linearHashing);
 //       object2.measureInserting("C:\\Users\\21260\\Desktop\\Übung10\\OfficialScrabbleWordListGerman.txt",object2::linearHashing);
         //System.out.println( radixRepresentation("pto"));
-        object2.addDataFromFile("C:\\Users\\21260\\Desktop\\Übung10\\OfficialScrabbleWordListGerman.txt",object2::doubledHashing);
+
+        object2.addDataFromFile("C:\\Users\\21260\\Desktop\\Übung10\\bb.txt",object2::quadraticHashing);
         //int x=4420*(radixRepresentation("ABTRUMPFE")%(object2.OpenHashMapArray.length-1));
         //int y=object2.hashing("ABTRUMPFE");//4420
         //System.out.println(object2.doubledHashing("ABTRUMPFE",4420));
-        OpenHashmapForStrings object = new OpenHashmapForStrings(200000);
+        //OpenHashmapForStrings object = new OpenHashmapForStrings(200000);
         //System.out.println(object.search("a"));
-        object.printHashArray();
+        object2.printHashArray();
+
     }
 }
