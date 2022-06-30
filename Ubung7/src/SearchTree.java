@@ -156,6 +156,22 @@ public class SearchTree <T extends Comparable>{
 
     }
 
+    public static void printBinaryTree(TreeElement root, int space, int height)
+    {
+        if (root == null) {
+            return;
+        }
+        space += height;
+        printBinaryTree(root.right, space, height);
+        System.out.println();
+        for (int i = height; i < space; i++) {
+            System.out.print(' ');
+        }
+        System.out.print(root.key);
+        System.out.println();
+        printBinaryTree(root.left, space, height);
+    }
+
     public static void main(String[] args) {
 //        //root
 //        TreeElement<Integer> e1=new TreeElement<>(18);
@@ -171,7 +187,7 @@ public class SearchTree <T extends Comparable>{
 
 
 
-       SearchTree<Integer> tree=new SearchTree<>(new TreeElement(18,null,null,null));
+       SearchTree<Integer> tree=new SearchTree<>(new TreeElement(8,null,null,null));
 //        TreeInsert(tree,new TreeElement(11));
 //        TreeInsert(tree,new TreeElement(6));
 //        TreeInsert(tree,new TreeElement(15));
@@ -199,13 +215,16 @@ public class SearchTree <T extends Comparable>{
         TreeInsert(tree,new TreeElement(6));
         TreeInsert(tree,new TreeElement(9));
         TreeInsert(tree,new TreeElement(11));
-        System.out.println("before :");
-        InorderTreeWalk(tree.root);
+        //TreeInsert(tree,new TreeElement(11));
+        //System.out.println(TreePredecessor(search(tree.root, 2)).key);
+        SpringTree(tree.root);
+        printBinaryTree(tree.root, 5,5);
+        //InorderTreeWalk(tree.root);
         //SpringTree(tree.root);
-        TreeDelete(tree,search(tree.root, 10));
-        System.out.println("after : ");
+        //TreeDelete(tree,search(tree.root, 10));
+        //System.out.println("after : ");
 
-        InorderTreeWalk(tree.root);
+        //InorderTreeWalk(tree.root);
 
 
     }

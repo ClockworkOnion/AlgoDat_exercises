@@ -51,15 +51,26 @@ public class BfsIterator {
 
 
     public static void main(String[] args) throws IOException, CustomException {
-      UndirectedGraph graph=UndirectedGraph.createGraphFromFile("C:\\Users\\21260\\Desktop\\Übung11\\ana");
-      //UndirectedGraph.printGraph(graph);
-        BfsIterator bfs=new BfsIterator(graph,1);
+      UndirectedGraph graph1=UndirectedGraph.createGraphFromFile("C:\\Users\\21260\\Desktop\\Übung11\\out.ucidata-zachary.sec");
+      UndirectedGraph graph2=UndirectedGraph.createGraphFromFile("C:\\Users\\21260\\Desktop\\Übung11\\soc-twitter-follows.txt");
 
-        while (!bfs.queue.isEmpty()){
-            int x=bfs.queue.peek();
-            int index=bfs.graph.accessByKey(x);
-            System.out.println(bfs.next() +" with distance : "+ graph.graph.get(index).distance);
+      BfsIterator bfs1=new BfsIterator(graph1,1);
+
+        while (!bfs1.queue.isEmpty()){
+            int x=bfs1.queue.peek();
+            int index=bfs1.graph.accessByKey(x);
+            System.out.println(bfs1.next() +" with distance : "+ graph1.graph.get(index).distance);
         }
+
+        BfsIterator bfs2=new BfsIterator(graph1,1);
+
+        while (!bfs2.queue.isEmpty()){
+            int x=bfs2.queue.peek();
+            int index=bfs2.graph.accessByKey(x);
+            System.out.println(bfs2.next() +" with distance : "+ graph1.graph.get(index).distance);
+        }
+
+
 
 
 

@@ -94,7 +94,7 @@ public class UndirectedGraph {
 
     public static void main(String[] args) throws IOException, CustomException {
         //System.out.println(gr.graph.get(1).get(0));
-        UndirectedGraph graph=createGraphFromFile("C:\\Users\\21260\\Desktop\\Übung11\\out.ucidata-zachary.sec");
+        UndirectedGraph graph=createGraphFromFile("C:\\Users\\21260\\Desktop\\Übung11\\ana");
         printGraph(graph);
 
     }
